@@ -22,7 +22,7 @@
           <label class="weui-label">评分</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="digit" v-model="movie.grade" />
+          <input class="weui-input" type="number" v-model="movie.grade" />
         </div>
       </div>
     </div>
