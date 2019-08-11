@@ -38,11 +38,7 @@
           <label class="weui-label">评分</label>
         </div>
         <div class="weui-cell__bd">
-<<<<<<< HEAD
           <input placeholder="请输入评分" class="weui-input" type="digit" v-model="movie.grade" />
-=======
-          <input class="weui-input" type="number" v-model="movie.grade" />
->>>>>>> ea586c0fd8d08f8272fbce71d0872bcbecf5408e
         </div>
       </div>
     </div>
