@@ -1,17 +1,13 @@
 <template>
   <div class="edit">
-    <mt-header title="修改">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-    </mt-header>
+    <van-nav-bar title="修改" left-text="返回" left-arrow @click-left="onClickLeft" />
     <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell__hd">
           <label class="weui-label">影片</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" v-model="movie.title" />
+          <input placeholder="请输入影片" class="weui-input" v-model="movie.title" />
         </div>
       </div>
       <div class="weui-cell weui-cell_access">
@@ -42,7 +38,7 @@
           <label class="weui-label">评分</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="digit" v-model="movie.grade" />
+          <input placeholder="请输入评分" class="weui-input" type="digit" v-model="movie.grade" />
         </div>
       </div>
     </div>
@@ -111,10 +107,15 @@ export default {
         this.$http
           .put("/movie/" + this.$route.params.id + ".json", this.movie)
           .then(res => {
-            this.$weui.toast("保存成功", 2000);
-            setTimeout(() => {
-              this.$router.push({ path: "/" });
-            }, 2000);
+            // this.$weui.toast("保存成功", 2000);
+            this.$toast({
+              type: "success",
+              message: "保存成功",
+              duration: 2000
+            });
+            // setTimeout(() => {
+            this.$router.push({ path: "/" });
+            // }, 2000);
           });
       }
     },
@@ -126,10 +127,15 @@ export default {
           this.$http
             .delete("/movie/" + this.$route.params.id + ".json", this.movie)
             .then(res => {
-              this.$weui.toast("删除成功", 2000);
-              setTimeout(() => {
-                this.$router.push({ path: "/" });
-              }, 2000);
+              // this.$weui.toast("删除成功", 2000);
+              this.$toast({
+                type: "success",
+                message: "删除成功",
+                duration: 2000
+              });
+              // setTimeout(() => {
+              this.$router.push({ path: "/" });
+              // }, 2000);
             });
         },
         { title: "操作提示" }
@@ -148,6 +154,9 @@ export default {
         },
         id: "singleLinePicker"
       });
+    },
+    onClickLeft() {
+      this.$router.go(-1);
     }
   }
 };

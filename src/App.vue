@@ -12,6 +12,9 @@
   opacity: 1;
   /* Override iOS opacity change affecting text & background color */
 }
+#app{
+  font-size: 14px;
+}
 /* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

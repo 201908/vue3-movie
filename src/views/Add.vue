@@ -1,13 +1,13 @@
 <template>
   <div class="add">
-    <mt-header title="新增"></mt-header>
+    <van-nav-bar title="添加到我的电影"></van-nav-bar>
     <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell__hd">
           <label class="weui-label">影片</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" v-model="movie.title" focus />
+          <input placeholder="请输入影片" class="weui-input" v-model="movie.title" />
         </div>
       </div>
       <div class="weui-cell weui-cell_access">
@@ -22,7 +22,7 @@
           <label class="weui-label">评分</label>
         </div>
         <div class="weui-cell__bd">
-          <input class="weui-input" type="digit" v-model="movie.grade" />
+          <input placeholder="请输入评分" class="weui-input" type="digit" v-model="movie.grade" />
         </div>
       </div>
     </div>
@@ -71,10 +71,15 @@ export default {
         this.movie.createTime = nowTime;
         this.movie.updateTime = nowTime;
         this.$http.post("/movie.json", this.movie).then(res => {
-          this.$weui.toast("保存成功", 2000);
-          setTimeout(() => {
-            this.$router.push({ path: "/" });
-          }, 2000);
+          // this.$weui.toast("保存成功", 2000);
+          this.$toast({
+            type: "success",
+            message: "保存成功",
+            duration: 2000
+          });
+          // setTimeout(() => {
+          this.$router.push({ path: "/" });
+          // }, 2000);
         });
       }
     },

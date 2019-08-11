@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <van-nav-bar title="我看过的电影"></van-nav-bar>
+  <div>
+    <van-nav-bar title="猫眼实时票房"></van-nav-bar>
     <div class="weui-search-bar" :class="{'weui-search-bar_focusing':inputShowed}" id="search_bar">
       <form class="weui-search-bar__form" action="javascript:return true">
         <div class="weui-search-bar__box">
@@ -45,26 +45,29 @@
           class="weui-media-box weui-media-box_text"
           v-for="(item,index) in list"
           :key="index"
-          @click="$router.push('/edit/' + item.id)"
+          @click="add(item.movieName)"
+          hover-class="global-hover"
         >
-          <h4 class="weui-media-box__title">{{item.title}}</h4>
+          <h4 class="weui-media-box__title">{{item.movieName}}</h4>
           <ul class="weui-media-box__info">
-            <li class="weui-media-box__info__meta">{{item.address}}</li>
-            <li class="weui-media-box__info__meta">{{item.createTime}}</li>
-            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra">{{item.grade}}分</li>
+            <li class="weui-media-box__info__meta">{{item.releaseInfo}}</li>
+            <li class="weui-media-box__info__meta">{{item.sumBoxInfo}}</li>
+            <li class="weui-media-box__info__meta weui-media-box__info__meta_extra blue-wrap">
+              今日票房
+              <span class="blue">{{item.boxInfo}}</span>万
+            </li>
           </ul>
         </div>
       </div>
     </div>
-    <div class="weui-loadmore weui-loadmore_line" v-show="loadmore">
-      <div class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无影片</div>
-    </div>
+    <view class="weui-loadmore weui-loadmore_line" v-show="loadmore">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无影片</view>
+    </view>
   </div>
 </template>
 
 <script>
 export default {
-  name: "home",
   data() {
     return {
       list: [],
@@ -76,30 +79,22 @@ export default {
   },
   created() {
     this.getData();
-    // this.$weui.alert("alert");
   },
   methods: {
     getData() {
-      // console.log(this.$store.getters.openId)
-      this.$http
-        .get("/movie.json")
-        .then(res => {
-          return res.data;
-        })
-        .then(res => {
-          var blogsArray = [];
-          for (let key in res) {
-            res[key].id = key;
-            blogsArray.push(res[key]);
-          }
-          this.list = blogsArray.reverse();
-          this.loadmore = this.list.length > 0 ? false : true;
-          // 搜索用到的
-          this.searchList = this.list;
-        });
+      this.$http.get("/api/box/second.json").then(res => {
+        console.log(res);
+        this.list = res.data.data.list;
+        this.loadmore = this.list.length > 0 ? false : true;
+        // 搜索用到的
+        this.searchList = this.list;
+      });
     },
-    edit(e) {
-      console.log(e);
+    add(name) {
+      app.toSwitchParam = name;
+      wx.switchTab({
+        url: "/pages/add/main"
+      });
     },
     showInput() {
       this.inputShowed = true;
@@ -119,7 +114,7 @@ export default {
     },
     filterBy(list, value) {
       return list.filter(item => {
-        return item.title.match(value);
+        return item.movieName.match(value);
       });
     }
   }
@@ -127,5 +122,24 @@ export default {
 </script>
 
 <style scoped>
+.searchbar-result {
+  margin-top: 0;
+  font-size: 14px;
+}
+.searchbar-result:before {
+  display: none;
+}
+.weui-cell {
+  padding: 12px 15px 12px 35px;
+}
+.blue-wrap {
+  border: 0;
+  float: right;
+}
+.blue {
+  color: #009eef;
+}
+.weui-media-box__info {
+  color: #999;
+}
 </style>
-

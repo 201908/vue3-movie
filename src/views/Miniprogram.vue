@@ -1,6 +1,6 @@
 <template>
   <div class="miniprogram">
-    <mt-header title="小程序"></mt-header>
+    <van-nav-bar title="小程序"></van-nav-bar>
     <div class="container">
       <div class="img-box">
         <img src="/img/miniprogram-qrcode.jpg" alt />
