@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- <my-component></my-component> -->
     <van-nav-bar title="我看过的电影"></van-nav-bar>
     <div class="weui-search-bar" :class="{'weui-search-bar_focusing':inputShowed}" id="search_bar">
       <form class="weui-search-bar__form" action="javascript:return true">
@@ -76,6 +77,8 @@ export default {
   },
   created() {
     this.getData();
+    console.log(this.GLOBAL.userSite);
+    this.changeData();
     // this.$weui.alert("alert");
   },
   methods: {

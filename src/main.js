@@ -51,10 +51,20 @@ Vue.prototype.$date = date;
 // 根元素字体大小
 import 'amfe-flexible'
 
+// 有赞
 import { Toast, NavBar } from 'vant';
 Vue.use(Toast);
 Vue.use(NavBar);
 
+// 全局
+import global from './Global.vue'//引用文件
+Vue.prototype.GLOBAL = global //挂载到Vue实例上面
+Vue.prototype.changeData = function () {//changeData是函数名
+  console.log('全局函数');
+}
+import MyComponent from '@/components/MyComponent.vue'; // 导入自己写的组件文件
+Vue.use(MyComponent); // 自定义全局组件的时候需要Vue.use();
+Vue.component('my-component', MyComponent); //初始化组件
 
 Vue.config.productionTip = false
 
